@@ -8,9 +8,9 @@ const Header = () => {
 
   return (
     <div>
-      <header id="main-header" class="border-bottom text-white p-3 mb-3">
-        <div class="container">
-          <div class="font-italic text-center">
+      <header className="border-bottom text-white p-3 mb-3">
+        <div className="container">
+          <div className="font-italic text-center">
             <h1 style={styles}>To Do List!</h1>
           </div>
         </div>
