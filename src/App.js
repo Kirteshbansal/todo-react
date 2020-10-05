@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
+import Header from "./components/Header";
 
 class App extends Component {
   constructor(props) {
@@ -8,7 +8,11 @@ class App extends Component {
     this.state = {};
   }
   render() {
-    return <div className="App"></div>;
+    return (
+      <div className="App">
+        <Header />
+      </div>
+    );
   }
 }
 
