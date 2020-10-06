@@ -37,6 +37,19 @@ class App extends Component {
     });
   };
 
+  handleDeleteProject = () => {
+    const selectedProjectId = this.state.selectedProjectId;
+    let projectDataState = { ...this.state.projectsData };
+    const projectIds = Object.keys(projectDataState);
+    if (projectIds.indexOf(selectedProjectId) !== -1) {
+      delete projectDataState[selectedProjectId];
+    }
+    this.setState({
+      projectsData: projectDataState,
+      selectedProjectId: "",
+    });
+  };
+
   projectPresence = (projectName) => {
     const project = Object.values(this.state)
       .filter((p) => p.projectName === projectName)
