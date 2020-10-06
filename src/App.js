@@ -30,6 +30,13 @@ class App extends Component {
     event.target[0].value = "";
   };
 
+  handleSelectedProject = (e) => {
+    const Id = e.target.options[e.target.selectedIndex].dataset.projectid;
+    this.setState({
+      selectedProjectId: Id,
+    });
+  };
+
   projectPresence = (projectName) => {
     const project = Object.values(this.state)
       .filter((p) => p.projectName === projectName)
