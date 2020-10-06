@@ -1,12 +1,8 @@
 import React, { Component } from "react";
 
 class Todos extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
   render() {
-    const { addTodo, stateData } = this.props;
+    const { addTodo, stateData, todoStatus, onDelete } = this.props;
     const selectedProjectId = stateData.selectedProjectId;
     const projectsData = stateData.projectsData;
     const projectName = Object.entries(projectsData)
@@ -17,7 +13,7 @@ class Todos extends Component {
     if (selectedProjectId) {
       const { todos } = projectsData[selectedProjectId];
       displayTodos = todos.map((t) => {
-        const status = t.completed ? "Undone" : "Done";
+        let status = t.completed ? "Undone" : "Done";
         return (
           <div
             key={t.todoId}
@@ -25,10 +21,11 @@ class Todos extends Component {
             className="d-flex justify-content-between align-items-center m-1 mt-2 border border-info rounded p-2"
           >
             <p className="text-white text-size m-0">{t.todoName}</p>
-            <div data-id={t.todoId} className="buttons">
+            <div id={t.todoId} className="buttons">
               <button
                 type="button"
                 className="btn btn-sm btn-outline-success done-todo mr-1"
+                onClick={todoStatus}
               >
                 {status}
               </button>
@@ -43,6 +40,7 @@ class Todos extends Component {
               <button
                 type="button"
                 className="btn btn-sm btn-outline-danger delete-todo"
+                onClick={onDelete}
               >
                 Delete
               </button>
