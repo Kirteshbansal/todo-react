@@ -52,7 +52,7 @@ class App extends Component {
   };
 
   projectPresence = (projectName) => {
-    const project = Object.values(this.state)
+    const project = Object.values(this.state.projectsData)
       .filter((p) => p.projectName === projectName)
       .map((p) => p.projectName);
     return project;
@@ -80,6 +80,19 @@ class App extends Component {
     }
   };
 
+  handleDeleteTodo = (e) => {
+    let todoId = Number(e.target.parentElement.getAttribute("id"));
+    const selectedProjectId = this.state.selectedProjectId;
+    let projectDataState = { ...this.state.projectsData };
+    const todos = projectDataState[selectedProjectId]["todos"].filter(
+      (t) => Number(t.todoId) !== todoId
+    );
+    projectDataState[selectedProjectId]["todos"] = todos;
+    this.setState({
+      projectsData: projectDataState,
+    });
+  };
+
   render() {
     return (
       <div className="App">
@@ -92,7 +105,12 @@ class App extends Component {
               onDelete={this.handleDeleteProject}
               onSelect={this.handleSelectedProject}
             />
-            <Todos addTodo={this.handleInputTodo} stateData={this.state} />
+            <Todos
+              addTodo={this.handleInputTodo}
+              stateData={this.state}
+              todoStatus={this.handleTodoStatus}
+              onDelete={this.handleDeleteTodo}
+            />
           </div>
         </div>
       </div>
