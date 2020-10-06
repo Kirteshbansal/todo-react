@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import Projects from "./components/Projects";
+import Todos from "./components/Todos";
 
 class App extends Component {
   constructor(props) {
@@ -57,6 +58,28 @@ class App extends Component {
     return project;
   };
 
+  handleInputTodo = (e) => {
+    e.preventDefault();
+    const todoName = e.target[0].value;
+    const selectedProjectId = this.state.selectedProjectId;
+    let projectDataState = { ...this.state.projectsData };
+    if (this.state.selectedProjectId !== "") {
+      if (todoName !== "" && todoName !== null) {
+        let todoId = Date.now();
+        let todoData = { todoId: todoId, todoName: todoName, completed: false };
+        projectDataState[selectedProjectId].todos.push(todoData);
+        this.setState({
+          projectsData: projectDataState,
+        });
+        e.target[0].value = "";
+      } else {
+        alert(`Please enter a valid todo name.`);
+      }
+    } else {
+      alert(`Select a project first.`);
+    }
+  };
+
   render() {
     return (
       <div className="App">
@@ -69,6 +92,7 @@ class App extends Component {
               onDelete={this.handleDeleteProject}
               onSelect={this.handleSelectedProject}
             />
+            <Todos addTodo={this.handleInputTodo} stateData={this.state} />
           </div>
         </div>
       </div>
