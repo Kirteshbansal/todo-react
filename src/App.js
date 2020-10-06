@@ -80,6 +80,19 @@ class App extends Component {
     }
   };
 
+  handleTodoStatus = (e) => {
+    let todoId = e.target.parentElement.getAttribute("id");
+    const selectedProjectId = this.state.selectedProjectId;
+    let projectDataState = { ...this.state.projectsData };
+    const todo = projectDataState[selectedProjectId].todos.filter(
+      (t) => Number(t.todoId) === Number(todoId)
+    )[0];
+    todo.completed ? (todo.completed = false) : (todo.completed = true);
+    this.setState({
+      projectsData: projectDataState,
+    });
+  };
+
   handleDeleteTodo = (e) => {
     let todoId = Number(e.target.parentElement.getAttribute("id"));
     const selectedProjectId = this.state.selectedProjectId;
