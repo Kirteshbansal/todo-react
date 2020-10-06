@@ -6,7 +6,10 @@ import Projects from "./components/Projects";
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      projectsData: {},
+      selectedProjectId: "",
+    };
   }
 
   handleInputProject = (event) => {
@@ -20,10 +23,11 @@ class App extends Component {
     } else {
       let key = Date.now();
       let data = { projectName: projectName, todos: [] };
-      this.setState({ [key]: data }, () =>
-        console.log("App State", this.state)
-      );
+      const projectDataState = { ...this.state.projectsData };
+      projectDataState[key] = data;
+      this.setState({ projectsData: projectDataState });
     }
+    event.target[0].value = "";
   };
 
   projectPresence = (projectName) => {
@@ -42,6 +46,8 @@ class App extends Component {
             <Projects
               addProject={this.handleInputProject}
               stateData={this.state}
+              onDelete={this.handleDeleteProject}
+              onSelect={this.handleSelectedProject}
             />
           </div>
         </div>
