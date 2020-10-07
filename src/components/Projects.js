@@ -10,6 +10,7 @@ class Projects extends Component {
       onSelect,
     } = this.props;
     const renderData = Object.entries(stateData["projectsData"]);
+    const totalProjects = renderData.length;
     const displayProjects = renderData.map((p) => {
       return (
         <option key={p[0]} value={p[1]["projectName"]} data-projectid={p[0]}>
@@ -39,6 +40,14 @@ class Projects extends Component {
           </button>
         </form>
         <hr className="border-white" />
+        <div>
+          <h5 className="text-300 mb-2">
+            <span className="badge badge-pill badge-secondary">
+              {totalProjects}
+            </span>{" "}
+            {totalProjects > 1 ? "projects" : "project"} in the list
+          </h5>
+        </div>
         <div className="input-group">
           <select
             id="projects-list"
