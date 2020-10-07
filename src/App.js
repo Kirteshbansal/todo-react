@@ -12,6 +12,7 @@ class App extends Component {
       selectedProjectId: "",
       selectedProjectName: "",
       newProjectName: "",
+      newTodoName: "",
     };
   }
 
@@ -57,14 +58,11 @@ class App extends Component {
     const projectIds = Object.keys(projectDataState);
     if (projectIds.indexOf(selectedProjectId) !== -1) {
       delete projectDataState[selectedProjectId];
-      this.setState(
-        {
-          projectsData: projectDataState,
-          selectedProjectId: "",
-          selectedProjectName: "",
-        },
-        () => console.log(this.state)
-      );
+      this.setState({
+        projectsData: projectDataState,
+        selectedProjectId: "",
+        selectedProjectName: "",
+      });
     } else {
       alert("No project is selected.");
     }
@@ -77,20 +75,32 @@ class App extends Component {
     return project;
   };
 
+  handleInputTodoName = (e) => {
+    const newTodoName = e.target.value;
+    console.log(newTodoName);
+    this.setState({
+      newTodoName,
+    });
+  };
+
   handleInputTodo = (e) => {
     e.preventDefault();
-    const todoName = e.target[0].value;
+    const newTodoName = this.state.newTodoName;
     const selectedProjectId = this.state.selectedProjectId;
     let projectDataState = { ...this.state.projectsData };
     if (this.state.selectedProjectId !== "") {
-      if (todoName !== "" && todoName !== null) {
+      if (newTodoName !== "" && newTodoName !== null) {
         let todoId = Date.now();
-        let todoData = { todoId: todoId, todoName: todoName, completed: false };
+        let todoData = {
+          todoId: todoId,
+          todoName: newTodoName,
+          completed: false,
+        };
         projectDataState[selectedProjectId].todos.push(todoData);
         this.setState({
           projectsData: projectDataState,
+          newTodoName: "",
         });
-        e.target[0].value = "";
       } else {
         alert(`Please enter a valid todo name.`);
       }
@@ -140,6 +150,7 @@ class App extends Component {
             />
             {this.state.selectedProjectId ? (
               <Todos
+                inputTodo={this.handleInputTodoName}
                 addTodo={this.handleInputTodo}
                 stateData={this.state}
                 todoStatus={this.handleTodoStatus}
