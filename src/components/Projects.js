@@ -41,7 +41,7 @@ class Projects extends Component {
         </form>
         <hr className="border-white" />
         <div>
-          <h5 className="text-300 mb-2">
+          <h5 className="text-300 mb-3">
             <span className="badge badge-pill badge-secondary">
               {totalProjects}
             </span>{" "}
