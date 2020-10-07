@@ -122,11 +122,11 @@ class App extends Component {
   };
 
   handleDeleteTodo = (e) => {
-    let todoId = Number(e.target.parentElement.getAttribute("id"));
+    let todoId = e.target.id;
     const selectedProjectId = this.state.selectedProjectId;
     let projectDataState = { ...this.state.projectsData };
     const todos = projectDataState[selectedProjectId]["todos"].filter(
-      (t) => Number(t.todoId) !== todoId
+      (t) => Number(t.todoId) !== Number(todoId)
     );
     projectDataState[selectedProjectId]["todos"] = todos;
     this.setState({
