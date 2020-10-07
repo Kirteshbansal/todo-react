@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import CompletedTodos from "./CompletedTodos";
 
 class Todos extends Component {
   render() {
@@ -17,6 +18,10 @@ class Todos extends Component {
     const projectName = Object.entries(projectsData)
       .filter((p) => p[0] === selectedProjectId)
       .map((p) => p[1]["projectName"])[0];
+    const allTodos = projectsData[selectedProjectId].todos.length;
+    const completedTodos = projectsData[selectedProjectId].todos.filter(
+      (t) => t.completed
+    ).length;
 
     let displayTodos;
     if (selectedProjectId) {
@@ -89,16 +94,48 @@ class Todos extends Component {
               </button>
             </form>
           </div>
-          <hr className="border-white" />
-          <div className="container d-flex justify-content-center">
-            <h3 className="col-md-6 text-white text-300 ">Project:</h3>
-            <h3 className="list-title text-white col-md-6 text-300 ">
+          <hr className="border-white mb-2" />
+          <div className="container d-flex justify-content-center my-2">
+            <h4 className="col-md-6 text-white text-300 mb-0">Project:</h4>
+            <h4 className="list-title text-white col-md-6 text-300 mb-0">
               {selectedProjectId ? projectName : "Not selected"}
-            </h3>
+            </h4>
           </div>
-
+          <div className="container d-flex align-items-center justify-content-around">
+            <div className="my-1">
+              <p className="badge badge-pill badge-success mb-0 mr-1">
+                Completed Tasks: {completedTodos}
+              </p>
+              <p className="badge badge-pill badge-info mb-0">
+                Total Tasks: {allTodos}
+              </p>
+            </div>
+            <div className="form-group form-check d-flex justify-content-center my-3">
+              <div>
+                <button
+                  type="button"
+                  className="btn btn-sm btn-outline-warning text-300"
+                  onClick={filterTodos}
+                >
+                  {stateData.show ? "Show All Todos" : "Show Completed Todos"}
+                </button>
+              </div>
+            </div>
+          </div>
+          <hr className="border-white mt-2" />
           <div className="list-group" id="todos">
-            {displayTodos}
+            {stateData.show === false ? (
+              displayTodos
+            ) : completedTodos > 0 ? (
+              <CompletedTodos
+                todosData={stateData}
+                todoDelete={onDelete}
+                todoEdit={editTodo}
+                markComplete={todoStatus}
+              />
+            ) : (
+              <h4>Opps! No task is completed.</h4>
+            )}
           </div>
         </div>
       </div>
