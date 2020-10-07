@@ -2,7 +2,16 @@ import React, { Component } from "react";
 
 class Todos extends Component {
   render() {
-    const { addTodo, stateData, todoStatus, onDelete } = this.props;
+    const {
+      inputTodo,
+      addTodo,
+      stateData,
+      todoStatus,
+      onDelete,
+      filterTodos,
+      editTodo,
+      newTodoValue,
+    } = this.props;
     const selectedProjectId = stateData.selectedProjectId;
     const projectsData = stateData.projectsData;
     const projectName = Object.entries(projectsData)
@@ -34,6 +43,7 @@ class Todos extends Component {
                 className="btn btn-sm btn-outline-info edit-todo mr-1"
                 data-toggle="modal"
                 data-target="#exampleModalCenter"
+                onClick={editTodo}
               >
                 Edit
               </button>
@@ -60,11 +70,12 @@ class Todos extends Component {
             <form action="" onSubmit={addTodo}>
               <input
                 type="text"
-                id="todo-input"
                 className="form-control"
                 maxLength="20"
                 placeholder="Enter new todo"
                 aria-label="new todo name"
+                value={stateData.newTodoName}
+                onChange={inputTodo}
               />
               <button
                 type="submit"
@@ -78,10 +89,7 @@ class Todos extends Component {
           <hr className="border-white" />
           <div className="container d-flex justify-content-center">
             <h3 className="col-md-6 text-white text-300 ">Project:</h3>
-            <h3
-              className="list-title text-white col-md-6 text-300 "
-              id="project-todo-list"
-            >
+            <h3 className="list-title text-white col-md-6 text-300 ">
               {selectedProjectId ? projectName : "Not selected"}
             </h3>
           </div>
