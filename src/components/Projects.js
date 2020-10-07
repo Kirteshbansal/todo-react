@@ -2,7 +2,13 @@ import React, { Component } from "react";
 
 class Projects extends Component {
   render() {
-    const { addProject, stateData, onDelete, onSelect } = this.props;
+    const {
+      inputProject,
+      addProject,
+      stateData,
+      onDelete,
+      onSelect,
+    } = this.props;
     const renderData = Object.entries(stateData["projectsData"]);
     const displayProjects = renderData.map((p) => {
       return (
@@ -21,6 +27,8 @@ class Projects extends Component {
             className="form-control"
             placeholder="Enter new project"
             aria-label="new project name"
+            value={stateData.newProjectName}
+            onChange={inputProject}
           />
           <button
             type="submit"
