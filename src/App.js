@@ -10,25 +10,32 @@ class App extends Component {
     this.state = {
       projectsData: {},
       selectedProjectId: "",
+      newProjectName: "",
     };
   }
 
   handleInputProject = (event) => {
     event.preventDefault();
-    const projectName = event.target[0].value;
-    let projectsNames = this.projectPresence(projectName);
-    if (projectName === "" || projectName === null) {
+    const newProjectName = this.state.newProjectName;
+    let projectsNames = this.projectPresence(newProjectName);
+    if (newProjectName === "" || newProjectName === null) {
       alert(`Please enter a valid project name.`);
-    } else if (projectsNames.indexOf(projectName) !== -1) {
+    } else if (projectsNames.indexOf(newProjectName) !== -1) {
       alert(`A project with same name already exists.`);
     } else {
       let key = Date.now();
-      let data = { projectName: projectName, todos: [] };
+      let data = { projectName: newProjectName, todos: [] };
       const projectDataState = { ...this.state.projectsData };
       projectDataState[key] = data;
-      this.setState({ projectsData: projectDataState });
+      this.setState({ projectsData: projectDataState, newProjectName: "" });
     }
-    event.target[0].value = "";
+  };
+
+  handleInputProjectName = (e) => {
+    const newProjectName = e.target.value;
+    this.setState({
+      newProjectName,
+    });
   };
 
   handleSelectedProject = (e) => {
@@ -113,6 +120,7 @@ class App extends Component {
         <div className="container">
           <div className="d-md-flex justify-content-md-between flex-md-row">
             <Projects
+              inputProject={this.handleInputProjectName}
               addProject={this.handleInputProject}
               stateData={this.state}
               onDelete={this.handleDeleteProject}
