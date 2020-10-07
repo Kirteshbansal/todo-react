@@ -77,7 +77,6 @@ class App extends Component {
 
   handleInputTodoName = (e) => {
     const newTodoName = e.target.value;
-    console.log(newTodoName);
     this.setState({
       newTodoName,
     });
@@ -104,8 +103,6 @@ class App extends Component {
       } else {
         alert(`Please enter a valid todo name.`);
       }
-    } else {
-      alert(`Select a project first.`);
     }
   };
 
