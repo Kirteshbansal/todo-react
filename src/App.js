@@ -15,6 +15,7 @@ class App extends Component {
       newTodoName: "",
       selectedTodoId: "",
       selectedTodoName: "",
+      show: false,
     };
   }
 
@@ -134,6 +135,14 @@ class App extends Component {
     });
   };
 
+  handleFilterTodos = () => {
+    this.setState((prevState) => {
+      return {
+        show: !prevState.show,
+      };
+    });
+  };
+
   render() {
     return (
       <div className="App">
@@ -154,6 +163,7 @@ class App extends Component {
                 stateData={this.state}
                 todoStatus={this.handleTodoStatus}
                 onDelete={this.handleDeleteTodo}
+                filterTodos={this.handleFilterTodos}
               />
             ) : null}
           </div>
