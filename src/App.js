@@ -13,6 +13,8 @@ class App extends Component {
       selectedProjectName: "",
       newProjectName: "",
       newTodoName: "",
+      selectedTodoId: "",
+      selectedTodoName: "",
     };
   }
 
@@ -107,7 +109,7 @@ class App extends Component {
   };
 
   handleTodoStatus = (e) => {
-    let todoId = e.target.parentElement.getAttribute("id");
+    let todoId = e.target.id;
     const selectedProjectId = this.state.selectedProjectId;
     let projectDataState = { ...this.state.projectsData };
     const todo = projectDataState[selectedProjectId].todos.filter(
