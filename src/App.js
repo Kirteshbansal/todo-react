@@ -10,6 +10,7 @@ class App extends Component {
     this.state = {
       projectsData: {},
       selectedProjectId: "",
+      selectedProjectName: "",
       newProjectName: "",
     };
   }
@@ -39,9 +40,14 @@ class App extends Component {
   };
 
   handleSelectedProject = (e) => {
-    const Id = e.target.options[e.target.selectedIndex].dataset.projectid;
+    const selectedProjectName = e.target.value;
+    let projectDataState = { ...this.state.projectsData };
+    const selectedProjectId = Object.entries(projectDataState)
+      .filter((p) => p[1]["projectName"] === selectedProjectName)
+      .map((p) => p[0])[0];
     this.setState({
-      selectedProjectId: Id,
+      selectedProjectId,
+      selectedProjectName,
     });
   };
 
@@ -51,11 +57,17 @@ class App extends Component {
     const projectIds = Object.keys(projectDataState);
     if (projectIds.indexOf(selectedProjectId) !== -1) {
       delete projectDataState[selectedProjectId];
+      this.setState(
+        {
+          projectsData: projectDataState,
+          selectedProjectId: "",
+          selectedProjectName: "",
+        },
+        () => console.log(this.state)
+      );
+    } else {
+      alert("No project is selected.");
     }
-    this.setState({
-      projectsData: projectDataState,
-      selectedProjectId: "",
-    });
   };
 
   projectPresence = (projectName) => {
@@ -126,12 +138,14 @@ class App extends Component {
               onDelete={this.handleDeleteProject}
               onSelect={this.handleSelectedProject}
             />
-            <Todos
-              addTodo={this.handleInputTodo}
-              stateData={this.state}
-              todoStatus={this.handleTodoStatus}
-              onDelete={this.handleDeleteTodo}
-            />
+            {this.state.selectedProjectId ? (
+              <Todos
+                addTodo={this.handleInputTodo}
+                stateData={this.state}
+                todoStatus={this.handleTodoStatus}
+                onDelete={this.handleDeleteTodo}
+              />
+            ) : null}
           </div>
         </div>
       </div>
