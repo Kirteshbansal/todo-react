@@ -30,9 +30,10 @@ class Todos extends Component {
             className="d-flex justify-content-between align-items-center m-1 mt-2 border border-info rounded p-2"
           >
             <p className="text-white text-size m-0">{t.todoName}</p>
-            <div id={t.todoId} className="buttons">
+            <div>
               <button
                 type="button"
+                id={t.todoId}
                 className="btn btn-sm btn-outline-success done-todo mr-1"
                 onClick={todoStatus}
               >
@@ -40,6 +41,7 @@ class Todos extends Component {
               </button>
               <button
                 type="button"
+                id={t.todoId}
                 className="btn btn-sm btn-outline-info edit-todo mr-1"
                 data-toggle="modal"
                 data-target="#exampleModalCenter"
@@ -49,6 +51,7 @@ class Todos extends Component {
               </button>
               <button
                 type="button"
+                id={t.todoId}
                 className="btn btn-sm btn-outline-danger delete-todo"
                 onClick={onDelete}
               >
