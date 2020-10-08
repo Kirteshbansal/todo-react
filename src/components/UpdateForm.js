@@ -1,7 +1,7 @@
 import React from "react";
 
 function UpdateForm(props) {
-  const { todoValue, getValue, id, submitValue } = props;
+  const { todoValue, getValue, submitValue } = props;
   return (
     <div
       className="modal fade"
