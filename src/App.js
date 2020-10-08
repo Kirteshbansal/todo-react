@@ -16,6 +16,7 @@ class App extends Component {
       selectedTodoId: "",
       selectedTodoName: "",
       show: false,
+      updateTodo: "",
     };
   }
 
@@ -143,6 +144,48 @@ class App extends Component {
     });
   };
 
+  handleEditTodo = (e) => {
+    const selectedTodoId = e.target.id;
+    const selectedProjectId = this.state.selectedProjectId;
+    let projectDataState = { ...this.state.projectsData };
+    const updateTodo = projectDataState[selectedProjectId]["todos"]
+      .filter((t) => Number(t.todoId) === Number(selectedTodoId))
+      .map((t) => t.todoName)[0];
+    this.setState({
+      updateTodo,
+      selectedTodoId,
+    });
+  };
+
+  handleEditedTodovalue = (e) => {
+    const newTodoName = e.target.value;
+    const { updateTodo } = this.state;
+    if (updateTodo !== newTodoName) {
+      this.setState({
+        updateTodo: newTodoName,
+      });
+    }
+  };
+
+  handleSubmitNewTodoValue = (e) => {
+    e.preventDefault();
+    const updateTodo = this.state.updateTodo;
+    const selectedTodoId = this.state.selectedTodoId;
+    const selectedProjectId = this.state.selectedProjectId;
+    let projectDataState = { ...this.state.projectsData };
+    const todos = projectDataState[selectedProjectId]["todos"].map((t) => {
+      if (Number(t.todoId) === Number(selectedTodoId)) {
+        t.todoName = updateTodo;
+      }
+      return t;
+    });
+    projectDataState[selectedProjectId]["todos"] = todos;
+    this.setState({
+      projectsData: projectDataState,
+      updateTodo: "",
+    });
+  };
+
   render() {
     return (
       <div className="App">
@@ -164,6 +207,9 @@ class App extends Component {
                 todoStatus={this.handleTodoStatus}
                 onDelete={this.handleDeleteTodo}
                 filterTodos={this.handleFilterTodos}
+                editTodo={this.handleEditTodo}
+                newTodoValue={this.handleEditedTodovalue}
+                submitEditedTodo={this.handleSubmitNewTodoValue}
               />
             ) : null}
           </div>
