@@ -110,10 +110,10 @@ class Todos extends Component {
           />
           <div className="container d-flex align-items-center justify-content-around">
             <div className="my-1">
-              <p className="badge badge-pill badge-success mb-0 mr-1">
+              <p className="badge badge-pill badge-success mb-0 mr-1 font-m">
                 Completed Tasks: {completedTodos}
               </p>
-              <p className="badge badge-pill badge-info mb-0">
+              <p className="badge badge-pill badge-info mb-0 font-m">
                 Total Tasks: {allTodos}
               </p>
             </div>
