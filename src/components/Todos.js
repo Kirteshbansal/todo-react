@@ -107,7 +107,6 @@ class Todos extends Component {
             todoValue={stateData.updateTodo}
             getValue={newTodoValue}
             submitValue={submitEditedTodo}
-            id={stateData.selectedTodoId}
           />
           <div className="container d-flex align-items-center justify-content-around">
             <div className="my-1">
